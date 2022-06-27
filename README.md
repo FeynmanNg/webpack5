@@ -206,3 +206,50 @@ yarn add -D eslint-webpack-plugin eslint
 ```
 yarn add -D babel-loader @babel/core @babel/preset-env
 ```
+
+新建 babel.config.js
+```
+module.exports = {
+  // 智能预设：能够编译 es6 语法
+  presets: ['@babel/preset-env'],
+};
+
+```
+在之前编译的 dist 文件中找到 js/main.js ，可以看到 sum 函数还是使用着 ... 参数的展开符，而配置完 babel 以后，再次编译
+```
+npx webpack
+```
+再次查看 main.js 的 sum 函数，它就被修改为使用 arguments 来接收参数
+
+#### 处理 HTML 资源
+当前在 public/html 中，还是使用着 script 标签把 dist/main.js 引入来使用。
+那我希望它不要再叫 main，修改或者新增其他文件，手动操作就很麻烦，此时需要 webpack 的插件来实现自动引入。
+
+下载依赖
+```
+yarn add -D html-webpack-plugin
+```
+引入到 webpack.config.js
+```
+
+```
+
+#### 开发自动化
+每次修改完代码都会重新编译，那么我希望一切自动化
+```
+yarn add -D webpack-dev-server
+```
+
+webpack.config.js
+```
+devServer: {
+  host: 'localhost',
+  port: 3000,
+  open: true,
+},
+```
+
+此时，执行的命令修改一下，增加 serve，才可以启动该配置。
+```
+npx webpack serve
+```

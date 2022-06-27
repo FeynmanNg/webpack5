@@ -1,4 +1,5 @@
 const ESLintWebpackPlugin = require('eslint-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
@@ -43,14 +44,35 @@ module.exports = {
           filename: 'static/fonts/[hash:10][ext][query]',
         },
       },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        // 下面这个配置可以另外在 babel.config.js 中配置
+        // options: {
+        //   presets: ['@babel/preset-env']
+        // }
+      },
     ],
   },
   // 插件
   plugins: [
     new ESLintWebpackPlugin({
+      // 检测哪些文件
       context: path.resolve(__dirname, 'src'),
+    }),
+    new HtmlWebpackPlugin({
+      // 模板，以指定的文件作为模板创建新的 html 文件
+      // 模板中的结构保留，并自动引入 js
+      template: path.resolve(__dirname, 'public/index.html'),
     }),
   ],
   // 模式
   mode: 'development',
+  // 开发服务器，插件是 webpack-dev-server
+  devServer: {
+    host: 'localhost',
+    port: 3000,
+    open: true,
+  },
 };
