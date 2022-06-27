@@ -1,0 +1,9 @@
+.box {
+  width: 100px;
+  height: 100px;
+  background-color: pink;
+}
+body {
+  background: url('../assets/img/bg.jpeg') no-repeat;
+  background-size: cover;
+}
